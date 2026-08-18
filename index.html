@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumora Bank — Sandbox de Tagueamento Profissional</title>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-T4K3DGMX');</script>
+<!-- End Google Tag Manager -->
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --navy-0:#0B1420; --navy-1:#101B2C; --navy-2:#16233A; --navy-3:#1E3050;
+    --gold:#C9A24B; --gold-soft:#E4CD92;
+    --green:#33B187; --red:#E2574C; --blue:#5B9CF6;
+    --ink:#EDEFF3; --ink-dim:#8A94A8; --line:rgba(201,162,75,0.14);
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--navy-0); font-family:'Manrope',sans-serif; color:var(--ink); }
+
+  .wrap{ display:flex; gap:24px; padding:28px; max-width:1240px; margin:0 auto; flex-wrap:wrap; align-items:flex-start; }
+
+  /* ===== PHONE ===== */
+  .phone-col{ flex:0 0 auto; }
+  .phone{ width:340px; height:700px; background:var(--navy-1); border-radius:38px; border:8px solid #050A12; box-shadow:0 30px 60px rgba(0,0,0,0.5); position:relative; overflow:hidden; display:flex; flex-direction:column; }
+  .notch{ position:absolute; top:0; left:50%; transform:translateX(-50%); width:120px; height:22px; background:#050A12; border-radius:0 0 14px 14px; z-index:10; }
+  .statusbar{ height:38px; display:flex; align-items:center; justify-content:space-between; padding:0 22px; font-size:11px; color:var(--ink-dim); font-weight:600; flex-shrink:0; }
+  .screen{ flex:1; overflow-y:auto; padding:0 18px 18px; }
+  .screen::-webkit-scrollbar{ width:0; }
+
+  .brand-row{ display:flex; align-items:center; gap:8px; margin:6px 0 22px; }
+  .brand-dot{ width:9px; height:9px; border-radius:50%; background:var(--gold); }
+  .brand-name{ font-size:13px; font-weight:800; letter-spacing:0.04em; color:var(--gold-soft); }
+
+  h1.scr-title{ font-size:20px; font-weight:800; margin:0 0 4px; }
+  p.scr-sub{ font-size:12.5px; color:var(--ink-dim); margin:0 0 22px; }
+
+  .field{ margin-bottom:14px; }
+  .field label{ display:block; font-size:11px; color:var(--ink-dim); margin-bottom:6px; font-weight:600; }
+  .field input{ width:100%; background:var(--navy-2); border:1px solid var(--line); border-radius:10px; padding:12px 14px; color:var(--ink); font-size:14px; font-family:'Manrope',sans-serif; }
+  .field input:focus{ outline:none; border-color:var(--gold); }
+
+  .btn{ width:100%; padding:13px; border-radius:10px; border:none; font-weight:700; font-size:14px; cursor:pointer; font-family:'Manrope',sans-serif; transition:opacity .15s; }
+  .btn:active{ opacity:.75; }
+  .btn-primary{ background:var(--gold); color:var(--navy-0); }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn-sm{ padding:9px; font-size:12.5px; }
+
+  .balance-card{ background:linear-gradient(135deg,var(--navy-3),var(--navy-2)); border:1px solid var(--line); border-radius:16px; padding:20px; margin-bottom:18px; }
+  .balance-label{ font-size:11px; color:var(--ink-dim); font-weight:600; }
+  .balance-value{ font-size:28px; font-weight:800; margin:6px 0 2px; letter-spacing:-0.02em; }
+  .balance-hide{ font-size:11px; color:var(--gold-soft); cursor:pointer; }
+
+  .quick-actions{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:22px; }
+  .qa-btn{ background:var(--navy-2); border:1px solid var(--line); border-radius:12px; padding:12px 4px; text-align:center; cursor:pointer; font-size:10.5px; color:var(--ink); font-weight:600; }
+  .qa-icon{ font-size:18px; display:block; margin-bottom:5px; }
+  .qa-btn:active{ background:var(--navy-3); }
+
+  .section-label{ font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold); font-weight:700; margin:0 0 10px; }
+  .txn{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--line); font-size:13px; }
+  .txn-name{ font-weight:600; }
+  .txn-date{ font-size:10.5px; color:var(--ink-dim); }
+  .txn-val{ font-weight:700; }
+  .txn-val.neg{ color:var(--red); } .txn-val.pos{ color:var(--green); }
+
+  .contact-list .contact{ display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); cursor:pointer; }
+  .avatar{ width:34px; height:34px; border-radius:50%; background:var(--navy-3); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:var(--gold-soft); flex-shrink:0; }
+  .contact-name{ font-size:13px; font-weight:600; }
+  .contact-sub{ font-size:10.5px; color:var(--ink-dim); }
+
+  .amount-display{ text-align:center; margin:26px 0; }
+  .amount-display .cur{ font-size:16px; color:var(--ink-dim); }
+  .amount-display .val{ font-size:36px; font-weight:800; }
+  .keypad{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px; }
+  .key{ background:var(--navy-2); border:1px solid var(--line); border-radius:10px; padding:14px 0; text-align:center; font-size:16px; font-weight:600; cursor:pointer; color:var(--ink); }
+  .key:active{ background:var(--navy-3); }
+
+  .invest-card{ background:var(--navy-2); border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:12px; cursor:pointer; }
+  .invest-card:active{ border-color:var(--gold); }
+  .invest-name{ font-weight:700; font-size:13.5px; }
+  .invest-tag{ display:inline-block; font-size:9.5px; background:var(--navy-3); color:var(--gold-soft); padding:2px 7px; border-radius:100px; margin-top:6px; font-weight:600; }
+  .invest-rate{ font-size:12px; color:var(--green); font-weight:700; margin-top:6px; }
+
+  .success-box{ text-align:center; padding:40px 10px; }
+  .success-icon{ width:56px; height:56px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; font-size:26px; }
+
+  .bottom-nav{ display:flex; justify-content:space-around; padding:12px 0; border-top:1px solid var(--line); flex-shrink:0; }
+  .nav-item{ text-align:center; font-size:9.5px; color:var(--ink-dim); cursor:pointer; font-weight:600; }
+  .nav-item.active{ color:var(--gold); }
+  .nav-icon{ font-size:17px; display:block; margin-bottom:3px; }
+
+  .kyc-step{ display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+  .kyc-dot{ width:24px; height:24px; border-radius:50%; background:var(--navy-2); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:var(--ink-dim); }
+  .kyc-dot.done{ background:var(--green); border-color:var(--green); color:#fff; }
+  .kyc-line{ flex:1; height:1px; background:var(--line); }
+  .upload-box{ border:1.5px dashed var(--line); border-radius:12px; padding:28px 14px; text-align:center; cursor:pointer; margin-bottom:16px; }
+  .upload-box:active{ border-color:var(--gold); }
+
+  /* ===== CONSOLE ===== */
+  .console-col{ flex:1; min-width:340px; }
+  .console-card{ background:var(--navy-1); border:1px solid var(--line); border-radius:16px; overflow:hidden; }
+  .console-head{ padding:16px 20px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+  .console-title{ font-size:13px; font-weight:800; letter-spacing:0.02em; }
+  .console-sub{ font-size:11px; color:var(--ink-dim); margin-top:2px; }
+  .clear-btn{ background:transparent; border:1px solid var(--line); color:var(--ink-dim); font-size:11px; padding:6px 12px; border-radius:8px; cursor:pointer; font-family:'Manrope',sans-serif; }
+  .clear-btn:hover{ color:var(--ink); border-color:var(--gold); }
+
+  .filters{ display:flex; gap:6px; padding:12px 20px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  .filter-chip{ font-size:10.5px; padding:5px 11px; border-radius:100px; border:1px solid var(--line); color:var(--ink-dim); cursor:pointer; font-weight:600; }
+  .filter-chip.active-gtm{ background:rgba(91,156,246,0.15); border-color:var(--blue); color:var(--blue); }
+  .filter-chip.active-fb{ background:rgba(51,177,135,0.15); border-color:var(--green); color:var(--green); }
+
+  .log-list{ height:560px; overflow-y:auto; padding:10px 16px; }
+  .log-empty{ text-align:center; color:var(--ink-dim); font-size:12.5px; padding:60px 20px; line-height:1.6; }
+  .log-entry{ border:1px solid var(--line); border-radius:10px; padding:11px 13px; margin-bottom:8px; font-family:'JetBrains Mono',monospace; animation:slideIn .25s ease; }
+  @keyframes slideIn{ from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+  .log-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .log-source{ font-size:9.5px; font-weight:700; padding:2px 8px; border-radius:5px; letter-spacing:0.03em; }
+  .log-source.gtm{ background:rgba(91,156,246,0.15); color:var(--blue); }
+  .log-source.fb{ background:rgba(51,177,135,0.15); color:var(--green); }
+  .log-time{ font-size:10px; color:var(--ink-dim); }
+  .log-event{ font-size:12.5px; font-weight:700; color:var(--gold-soft); margin-bottom:5px; }
+  .log-params{ font-size:11px; color:var(--ink-dim); line-height:1.6; white-space:pre-wrap; word-break:break-all; }
+  .log-params .k{ color:#8FB4E8; }
+
+  .hint-bar{ padding:12px 20px; border-top:1px solid var(--line); font-size:11px; color:var(--ink-dim); }
+  .hint-bar b{ color:var(--gold-soft); }
+
+  @media(max-width:780px){ .wrap{ padding:14px; } .phone{ width:100%; max-width:340px; margin:0 auto; } .console-col{ min-width:0; width:100%; } }
+</style>
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T4K3DGMX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="wrap">
+
+  <div class="phone-col">
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="statusbar"><span>9:41</span><span>●●● Lumora Bank</span></div>
+      <div class="screen" id="screen"></div>
+      <div class="bottom-nav" id="bottomNav" style="display:none;">
+        <div class="nav-item" data-nav="home"><span class="nav-icon">⌂</span>Início</div>
+        <div class="nav-item" data-nav="cartao"><span class="nav-icon">▭</span>Cartão</div>
+        <div class="nav-item" data-nav="investir"><span class="nav-icon">◈</span>Investir</div>
+        <div class="nav-item" data-nav="perfil"><span class="nav-icon">◉</span>Perfil</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="console-col">
+    <div class="console-card">
+      <div class="console-head">
+        <div>
+          <div class="console-title">Console de Eventos</div>
+          <div class="console-sub">Simula GTM Preview (dataLayer) + Firebase DebugView (logEvent)</div>
+        </div>
+        <button class="clear-btn" id="clearLog">Limpar</button>
+      </div>
+      <div class="filters">
+        <div class="filter-chip active-gtm" data-filter="gtm">● GTM dataLayer</div>
+        <div class="filter-chip active-fb" data-filter="fb">● Firebase logEvent</div>
+        <div class="filter-chip" data-filter="all" style="color:var(--ink);">Todos</div>
+      </div>
+      <div class="log-list" id="logList">
+        <div class="log-empty" id="logEmpty">Nenhum evento ainda.<br>Navegue pelo app à esquerda — cada ação vai disparar um evento aqui, igual você veria no GTM Preview ou no DebugView do Firebase.</div>
+      </div>
+      <div class="hint-bar">Journeys mapeadas: <b>Onboarding/KYC · PIX · Cartão · Investimentos</b> — use isso pra cruzar com seu Tagbook.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var screenEl = document.getElementById('screen');
+  var logList = document.getElementById('logList');
+  var logEmpty = document.getElementById('logEmpty');
+  var bottomNav = document.getElementById('bottomNav');
+  var activeFilter = 'all';
+  var pixAmount = '';
+  var currentContact = null;
+
+  // ---------- Centralized Analytics Layer ----------
+  window.dataLayer = window.dataLayer || [];
+
+  function pushGTM(eventName, params){
+    // Boas práticas SPA: Limpa estado ecomm/anterior
+    window.dataLayer.push({ ecommerce: null });
+    
+    var payload = Object.assign({ event: eventName }, params);
+    window.dataLayer.push(payload);
+
+    renderLog({ source: 'gtm', event: eventName, params: params, time: new Date() });
+  }
+
+  function logFirebase(eventName, params){
+    // Exemplo de integração nativa Firebase Web Analytics se disponível
+    if (typeof firebase !== 'undefined' && firebase.analytics) {
+      firebase.analytics().logEvent(eventName, params);
+    }
+    renderLog({ source: 'fb', event: eventName, params: params, time: new Date() });
+  }
+
+  function renderLog(entry){
+    if(logEmpty) logEmpty.style.display = 'none';
+    var div = document.createElement('div');
+    div.className = 'log-entry';
+    div.dataset.source = entry.source;
+    var t = entry.time.toLocaleTimeString('pt-BR', {hour12:false});
+    var paramsHtml = Object.keys(entry.params).map(function(k){
+      return '<span class="k">'+k+'</span>: '+JSON.stringify(entry.params[k]);
+    }).join('\n');
+    div.innerHTML =
+      '<div class="log-top">' +
+        '<span class="log-source '+entry.source+'">'+(entry.source==='gtm'?'GTM · dataLayer.push':'Firebase · logEvent')+'</span>' +
+        '<span class="log-time">'+t+'</span>' +
+      '</div>' +
+      '<div class="log-event">'+entry.event+'</div>' +
+      '<div class="log-params">'+(paramsHtml || '(sem parâmetros)')+'</div>';
+    applyFilterToEntry(div);
+    logList.prepend(div);
+  }
+
+  function applyFilterToEntry(div){
+    if(activeFilter === 'all') { div.style.display = ''; return; }
+    div.style.display = (div.dataset.source === activeFilter) ? '' : 'none';
+  }
+
+  document.querySelectorAll('.filter-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      activeFilter = chip.getAttribute('data-filter');
+      document.querySelectorAll('.filter-chip').forEach(function(c){ c.style.outline=''; });
+      chip.style.outline = '1px solid var(--gold)';
+      document.querySelectorAll('.log-entry').forEach(applyFilterToEntry);
+    });
+  });
+
+  document.getElementById('clearLog').addEventListener('click', function(){
+    logList.innerHTML = '';
+    logList.appendChild(logEmpty);
+    logEmpty.style.display = 'block';
+  });
+
+  // ---------- Screens ----------
+  function brand(){ return '<div class="brand-row"><span class="brand-dot"></span><span class="brand-name">LUMORA BANK</span></div>'; }
+
+  function renderScreen(html){ screenEl.innerHTML = brand() + html; screenEl.scrollTop = 0; }
+
+  function screenWelcome(){
+    bottomNav.style.display = 'none';
+    pushGTM('page_view', { page_title: 'Welcome', page_location: '/welcome' });
+    
+    renderScreen(
+      '<h1 class="scr-title">Bem-vindo de volta</h1>' +
+      '<p class="scr-sub">Entre ou crie sua conta para simular a jornada completa.</p>' +
+      '<div class="field"><label>CPF</label><input id="cpfInput" placeholder="000.000.000-00" maxlength="14"></div>' +
+      '<div class="field"><label>Senha</label><input id="pwdInput" type="password" placeholder="••••••"></div>' +
+      '<button class="btn btn-primary" id="loginBtn">Entrar</button>' +
+      '<div style="height:10px;"></div>' +
+      '<button class="btn btn-ghost" id="signupBtn">Criar conta (Onboarding/KYC)</button>'
+    );
+    document.getElementById('loginBtn').onclick = function(){
+      pushGTM('login_attempt', { method: 'cpf_senha' });
+      setTimeout(function(){
+        logFirebase('login', { method: 'cpf_senha', user_status: 'existing' });
+        screenHome();
+      }, 300);
+    };
+    document.getElementById('signupBtn').onclick = function(){
+      pushGTM('tutorial_begin', { origem: 'tela_login' });
+      screenKycStep1();
+    };
+  }
+
+  function screenKycStep1(){
+    pushGTM('page_view', { page_title: 'KYC Step 1 - Personal Data', page_location: '/onboarding/step-1' });
+    renderScreen(
+      '<div class="kyc-step"><div class="kyc-dot done">1</div><div class="kyc-line"></div><div class="kyc-dot">2</div><div class="kyc-line"></div><div class="kyc-dot">3</div></div>' +
+      '<h1 class="scr-title">Seus dados</h1>' +
+      '<p class="scr-sub">Etapa 1 de 3 — Onboarding</p>' +
+      '<div class="field"><label>Nome completo</label><input placeholder="Ex: Maria Silva"></div>' +
+      '<div class="field"><label>Email</label><input placeholder="voce@email.com"></div>' +
+      '<div class="field"><label>CPF</label><input placeholder="000.000.000-00"></div>' +
+      '<button class="btn btn-primary" id="nextBtn">Continuar</button>'
+    );
+    document.getElementById('nextBtn').onclick = function(){
+      pushGTM('signup_step_completed', { step: 1, step_name: 'dados_pessoais' });
+      screenKycStep2();
+    };
+  }
+
+  function screenKycStep2(){
+    pushGTM('page_view', { page_title: 'KYC Step 2 - Documents', page_location: '/onboarding/step-2' });
+    renderScreen(
+      '<div class="kyc-step"><div class="kyc-dot done">✓</div><div class="kyc-line"></div><div class="kyc-dot done">2</div><div class="kyc-line"></div><div class="kyc-dot">3</div></div>' +
+      '<h1 class="scr-title">Documento de identidade</h1>' +
+      '<p class="scr-sub">Etapa 2 de 3 — Envie a foto do seu RG ou CNH</p>' +
+      '<div class="upload-box" id="uploadDoc">📄<br><span style="font-size:12px;">Toque para enviar documento</span></div>' +
+      '<button class="btn btn-primary" id="nextBtn2" disabled style="opacity:.4;">Continuar</button>'
+    );
+    document.getElementById('uploadDoc').onclick = function(){
+      logFirebase('kyc_document_upload', { document_type: 'rg', upload_method: 'camera' });
+      var btn = document.getElementById('nextBtn2');
+      btn.disabled = false; btn.style.opacity = 1;
+      this.innerHTML = '✅<br><span style="font-size:12px;">Documento recebido</span>';
+    };
+    document.getElementById('nextBtn2').onclick = function(){
+      pushGTM('signup_step_completed', { step: 2, step_name: 'documento' });
+      screenKycStep3();
+    };
+  }
+
+  function screenKycStep3(){
+    pushGTM('page_view', { page_title: 'KYC Step 3 - Selfie', page_location: '/onboarding/step-3' });
+    renderScreen(
+      '<div class="kyc-step"><div class="kyc-dot done">✓</div><div class="kyc-line"></div><div class="kyc-dot done">✓</div><div class="kyc-line"></div><div class="kyc-dot done">3</div></div>' +
+      '<h1 class="scr-title">Selfie de verificação</h1>' +
+      '<p class="scr-sub">Etapa 3 de 3 — Confirme que é você</p>' +
+      '<div class="upload-box" id="uploadSelfie">🤳<br><span style="font-size:12px;">Toque para capturar selfie</span></div>' +
+      '<button class="btn btn-primary" id="finishBtn" disabled style="opacity:.4;">Finalizar cadastro</button>'
+    );
+    document.getElementById('uploadSelfie').onclick = function(){
+      logFirebase('kyc_selfie_captured', { liveness_check: 'passed' });
+      var btn = document.getElementById('finishBtn');
+      btn.disabled = false; btn.style.opacity = 1;
+      this.innerHTML = '✅<br><span style="font-size:12px;">Selfie confirmada</span>';
+    };
+    document.getElementById('finishBtn').onclick = function(){
+      pushGTM('sign_up', { method: 'cpf_senha', kyc_status: 'approved', tempo_total_onboarding_seg: 187 });
+      logFirebase('sign_up', { method: 'cpf_senha' });
+      screenHome();
+    };
+  }
+
+  function screenHome(){
+    bottomNav.style.display = 'flex';
+    setActiveNav('home');
+    pushGTM('page_view', { page_title: 'Home Dashboard', page_location: '/home' });
+    renderScreen(
+      '<h1 class="scr-title">Olá 👋</h1>' +
+      '<p class="scr-sub">Confira seu saldo e movimentações</p>' +
+      '<div class="balance-card">' +
+        '<div class="balance-label">SALDO DISPONÍVEL</div>' +
+        '<div class="balance-value">R$ 12.480,32</div>' +
+        '<div class="balance-hide">Conta Corrente •••• 4471</div>' +
+      '</div>' +
+      '<div class="quick-actions">' +
+        '<div class="qa-btn" data-qa="pix"><span class="qa-icon">⚡</span>PIX</div>' +
+        '<div class="qa-btn" data-qa="cartao"><span class="qa-icon">▭</span>Cartão</div>' +
+        '<div class="qa-btn" data-qa="investir"><span class="qa-icon">◈</span>Investir</div>' +
+        '<div class="qa-btn" data-qa="extrato"><span class="qa-icon">≡</span>Extrato</div>' +
+      '</div>' +
+      '<div class="section-label">Últimas movimentações</div>' +
+      '<div class="txn"><div><div class="txn-name">PIX recebido — João</div><div class="txn-date">Hoje, 09:14</div></div><div class="txn-val pos">+R$ 250,00</div></div>' +
+      '<div class="txn"><div><div class="txn-name">Fatura cartão</div><div class="txn-date">Ontem</div></div><div class="txn-val neg">-R$ 1.204,50</div></div>' +
+      '<div class="txn"><div><div class="txn-name">Aplicação CDB</div><div class="txn-date">2 dias atrás</div></div><div class="txn-val neg">-R$ 2.000,00</div></div>'
+    );
+    document.querySelectorAll('.qa-btn').forEach(function(btn){
+      btn.onclick = function(){
+        var qa = btn.getAttribute('data-qa');
+        pushGTM('select_content', { content_type: 'quick_action', item_id: qa });
+        if(qa==='pix') screenPixContacts();
+        else if(qa==='cartao') screenCartao();
+        else if(qa==='investir') screenInvestir();
+        else if(qa==='extrato') pushGTM('extrato_view', { origem: 'home_dashboard' });
+      };
+    });
+  }
+
+  function screenPixContacts(){
+    setActiveNav('home');
+    pushGTM('page_view', { page_title: 'PIX - Select Contact', page_location: '/pix/contacts' });
+    logFirebase('pix_start', { origem: 'quick_action' });
+    var contacts = [
+      {n:'João Pedro', k:'joao@email.com'},
+      {n:'Ana Beatriz', k:'11 98888-2211'},
+      {n:'Carlos Souza', k:'carlos@email.com'},
+      {n:'Fernanda Lima', k:'11 97777-4433'}
+    ];
+    var listHtml = contacts.map(function(c,i){
+      return '<div class="contact" data-idx="'+i+'"><div class="avatar">'+c.n[0]+'</div><div><div class="contact-name">'+c.n+'</div><div class="contact-sub">'+c.k+'</div></div></div>';
+    }).join('');
+    renderScreen(
+      '<h1 class="scr-title">Transferir via PIX</h1>' +
+      '<p class="scr-sub">Escolha um contato</p>' +
+      '<div class="field"><input placeholder="Buscar contato ou chave PIX"></div>' +
+      '<div class="section-label">Contatos frequentes</div>' +
+      '<div class="contact-list">'+listHtml+'</div>'
+    );
+    document.querySelectorAll('.contact').forEach(function(el){
+      el.onclick = function(){
+        currentContact = contacts[el.getAttribute('data-idx')];
+        pushGTM('select_item', { item_list_name: 'pix_contacts', item_id: currentContact.k });
+        screenPixAmount();
+      };
+    });
+  }
+
+  function screenPixAmount(){
+    pixAmount = '';
+    pushGTM('page_view', { page_title: 'PIX - Enter Amount', page_location: '/pix/amount' });
+    renderScreen(
+      '<h1 class="scr-title">Enviar para '+(currentContact?currentContact.n:'contato')+'</h1>' +
+      '<p class="scr-sub">Digite o valor</p>' +
+      '<div class="amount-display"><span class="cur">R$</span><span class="val" id="amtVal">0,00</span></div>' +
+      '<div class="keypad">' +
+        ['1','2','3','4','5','6','7','8','9','','0','⌫'].map(function(k){ return '<div class="key" data-k="'+k+'">'+k+'</div>'; }).join('') +
+      '</div>' +
+      '<button class="btn btn-primary" id="pixContinue">Continuar</button>'
+    );
+    document.querySelectorAll('.key').forEach(function(k){
+      k.onclick = function(){
+        var v = k.getAttribute('data-k');
+        if(v==='⌫') pixAmount = pixAmount.slice(0,-1);
+        else if(v!=='') pixAmount += v;
+        var num = (parseInt(pixAmount||'0',10)/100).toFixed(2).replace('.',',');
+        document.getElementById('amtVal').textContent = num;
+      };
+    });
+    document.getElementById('pixContinue').onclick = function(){
+      var amount = (parseInt(pixAmount||'0',10)/100);
+      logFirebase('pix_amount_entered', { value: amount, currency: 'BRL' });
+      screenPixConfirm(amount);
+    };
+  }
+
+  function screenPixConfirm(amount){
+    pushGTM('page_view', { page_title: 'PIX - Confirmation', page_location: '/pix/confirm' });
+    pushGTM('begin_checkout', {
+      currency: 'BRL',
+      value: amount,
+      items: [{ item_id: 'pix_transfer', item_name: 'Transferência PIX' }]
+    });
+
+    renderScreen(
+      '<h1 class="scr-title">Confirmar transferência</h1>' +
+      '<div class="balance-card">' +
+        '<div class="balance-label">PARA</div>' +
+        '<div style="font-size:16px;font-weight:700;margin:4px 0 12px;">'+(currentContact?currentContact.n:'')+'</div>' +
+        '<div class="balance-label">VALOR</div>' +
+        '<div class="balance-value">R$ '+amount.toFixed(2).replace('.',',')+'</div>' +
+      '</div>' +
+      '<button class="btn btn-primary" id="confirmPix">Confirmar e enviar</button>'
+    );
+    document.getElementById('confirmPix').onclick = function(){
+      var txId = 'TX_PIX_' + Date.now();
+      
+      // GA4 Standard Purchase
+      pushGTM('purchase', {
+        transaction_id: txId,
+        value: amount,
+        currency: 'BRL',
+        payment_type: 'pix',
+        items: [{
+          item_id: 'pix_transfer',
+          item_name: 'Transferência PIX',
+          item_category: 'Financeiro'
+        }]
+      });
+
+      logFirebase('pix_completed', { value: amount, currency: 'BRL', transaction_id: txId });
+      screenSuccess('Transferência enviada!', 'R$ '+amount.toFixed(2).replace('.',',')+' para '+(currentContact?currentContact.n:''), screenHome);
+    };
+  }
+
+  function screenCartao(){
+    setActiveNav('cartao');
+    pushGTM('page_view', { page_title: 'Credit Card Dashboard', page_location: '/card' });
+    logFirebase('card_view', { card_status: 'ativo' });
+    renderScreen(
+      '<h1 class="scr-title">Cartão de crédito</h1>' +
+      '<p class="scr-sub">Fatura fechada — vence em 10/09</p>' +
+      '<div class="balance-card">' +
+        '<div class="balance-label">FATURA ATUAL</div>' +
+        '<div class="balance-value">R$ 1.204,50</div>' +
+        '<div class="balance-hide">Cartão •••• 8823</div>' +
+      '</div>' +
+      '<button class="btn btn-primary" id="payInvoice">Pagar fatura</button>' +
+      '<div style="height:20px;"></div>' +
+      '<div class="section-label">Compras recentes</div>' +
+      '<div class="txn"><div><div class="txn-name">iFood</div><div class="txn-date">15/08</div></div><div class="txn-val neg">-R$ 68,90</div></div>' +
+      '<div class="txn"><div><div class="txn-name">Uber</div><div class="txn-date">14/08</div></div><div class="txn-val neg">-R$ 32,00</div></div>'
+    );
+    document.getElementById('payInvoice').onclick = function(){
+      pushGTM('begin_checkout', {
+        value: 1204.50,
+        currency: 'BRL',
+        items: [{ item_id: 'credit_card_invoice', item_name: 'Fatura do Cartão' }]
+      });
+      screenCartaoConfirm();
+    };
+  }
+
+  function screenCartaoConfirm(){
+    pushGTM('page_view', { page_title: 'Card Payment Confirmation', page_location: '/card/pay-confirm' });
+    renderScreen(
+      '<h1 class="scr-title">Confirmar pagamento</h1>' +
+      '<div class="balance-card"><div class="balance-label">VALOR DA FATURA</div><div class="balance-value">R$ 1.204,50</div><div class="balance-hide">Débito em conta corrente</div></div>' +
+      '<button class="btn btn-primary" id="confirmCard">Confirmar pagamento</button>'
+    );
+    document.getElementById('confirmCard').onclick = function(){
+      var txId = 'TX_INV_' + Date.now();
+      logFirebase('invoice_payment_completed', { value: 1204.50, currency: 'BRL', payment_method: 'debito_conta' });
+      
+      pushGTM('purchase', {
+        transaction_id: txId,
+        value: 1204.50,
+        currency: 'BRL',
+        payment_type: 'debito_conta',
+        items: [{
+          item_id: 'credit_card_invoice',
+          item_name: 'Fatura do Cartão',
+          item_category: 'Pagamentos'
+        }]
+      });
+      screenSuccess('Fatura paga!', 'R$ 1.204,50 debitados da sua conta', screenCartao);
+    };
+  }
+
+  function screenInvestir(){
+    setActiveNav('investir');
+    pushGTM('page_view', { page_title: 'Investments List', page_location: '/investments' });
+    var products = [
+      {n:'CDB Lumora 120% CDI', tag:'Renda fixa', rate:'12,4% a.a.'},
+      {n:'Tesouro Selic 2029', tag:'Renda fixa', rate:'11,9% a.a.'},
+      {n:'Fundo Multimercado Alfa', tag:'Multimercado', rate:'14,2% a.a. (histórico)'}
+    ];
+    renderScreen(
+      '<h1 class="scr-title">Investimentos</h1>' +
+      '<p class="scr-sub">Simule antes de aplicar</p>' +
+      products.map(function(p,i){
+        return '<div class="invest-card" data-idx="'+i+'"><div class="invest-name">'+p.n+'</div><span class="invest-tag">'+p.tag+'</span><div class="invest-rate">'+p.rate+'</div></div>';
+      }).join('')
+    );
+    document.querySelectorAll('.invest-card').forEach(function(el){
+      el.onclick = function(){
+        var p = products[el.getAttribute('data-idx')];
+        pushGTM('select_item', {
+          item_list_name: 'investments',
+          items: [{ item_name: p.n, item_category: p.tag }]
+        });
+        screenInvestSim(p);
+      };
+    });
+  }
+
+  function screenInvestSim(product){
+    pushGTM('page_view', { page_title: 'Investments Simulator', page_location: '/investments/simulate' });
+    renderScreen(
+      '<h1 class="scr-title">'+product.n+'</h1>' +
+      '<p class="scr-sub">Simule um aporte</p>' +
+      '<div class="field"><label>Valor do aporte (R$)</label><input id="investInput" placeholder="Ex: 2000" inputmode="numeric"></div>' +
+      '<button class="btn btn-primary" id="simulateBtn">Simular rendimento</button>' +
+      '<div id="simResult"></div>'
+    );
+    document.getElementById('simulateBtn').onclick = function(){
+      var val = parseFloat(document.getElementById('investInput').value || '0');
+      logFirebase('investment_simulation', { product_name: product.n, simulated_value: val });
+      document.getElementById('simResult').innerHTML =
+        '<div class="balance-card" style="margin-top:16px;"><div class="balance-label">RENDIMENTO ESTIMADO EM 12 MESES</div><div class="balance-value">R$ '+(val*1.12).toFixed(2).replace('.',',')+'</div></div>' +
+        '<button class="btn btn-primary" id="confirmInvest">Aplicar agora</button>';
+      document.getElementById('confirmInvest').onclick = function(){
+        var txId = 'TX_INV_APP_' + Date.now();
+        pushGTM('purchase', {
+          transaction_id: txId,
+          value: val,
+          currency: 'BRL',
+          items: [{ item_name: product.n, item_category: product.tag }]
+        });
+        logFirebase('investment_completed', { product_name: product.n, value: val, currency: 'BRL' });
+        screenSuccess('Aplicação confirmada!', product.n, screenInvestir);
+      };
+    };
+  }
+
+  function screenSuccess(title, sub, backFn){
+    pushGTM('page_view', { page_title: 'Success Screen', page_location: '/success' });
+    renderScreen(
+      '<div class="success-box">' +
+        '<div class="success-icon">✓</div>' +
+        '<h1 class="scr-title" style="text-align:center;">'+title+'</h1>' +
+        '<p class="scr-sub" style="text-align:center;">'+sub+'</p>' +
+        '<button class="btn btn-primary" id="backBtn" style="margin-top:14px;">Voltar ao início</button>' +
+      '</div>'
+    );
+    document.getElementById('backBtn').onclick = backFn;
+  }
+
+  function screenPerfil(){
+    setActiveNav('perfil');
+    pushGTM('page_view', { page_title: 'User Profile', page_location: '/profile' });
+    renderScreen(
+      '<h1 class="scr-title">Seu perfil</h1>' +
+      '<p class="scr-sub">Gerencie sua conta</p>' +
+      '<button class="btn btn-ghost btn-sm" style="margin-bottom:10px;" id="logoutBtn">Sair da conta</button>'
+    );
+    document.getElementById('logoutBtn').onclick = function(){
+      pushGTM('logout', { origem: 'perfil' });
+      screenWelcome();
+    };
+  }
+
+  function setActiveNav(name){
+    document.querySelectorAll('.nav-item').forEach(function(el){
+      el.classList.toggle('active', el.getAttribute('data-nav')===name);
+    });
+  }
+  document.querySelectorAll('.nav-item').forEach(function(el){
+    el.addEventListener('click', function(){
+      var nav = el.getAttribute('data-nav');
+      pushGTM('select_content', { content_type: 'bottom_nav', item_id: nav });
+      if(nav==='home') screenHome();
+      else if(nav==='cartao') screenCartao();
+      else if(nav==='investir') screenInvestir();
+      else if(nav==='perfil') screenPerfil();
+    });
+  });
+
+  screenWelcome();
+})();
+</script>
+</body>
+</html>
